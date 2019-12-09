@@ -23,8 +23,16 @@ export PATH=/N/u/gberto/Karst/miniconda2/bin:$PATH
 set -e
 set -x
 
+segmentations=`jq -r '.segmentations' config.json`
+
 #execute app
-./run.sh
+if [ ! $segmentations == 'null' ]; then
+	echo "STARTING TEST..."
+	./run_test.sh
+else
+	echo "STARTING TRAINING & TEST..."
+	./run.sh
+fi
 
 ret=$?
 if [ ! $ret -eq 0 ]; then
