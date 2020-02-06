@@ -3,7 +3,7 @@
 ### app-classifyber
 This app implements Classifyber, a supervised streamline-based method that performs automatic bundle segmentation by learning from example bundles already segmented, and that is robust to a multitude of diverse settings, i.e. that can deal with different bundle sizes, tracking algorithms, and dMRI data qualities. Classifyber is based on binary linear classification, which simultaneously combines information from bundle geometries, connectivity patterns and atlases. 
 
-![](graphical_abstract.png)
+![](graphical_abstract_classifyber.png)
 
 ### Authors
 - Giulia Bertò (giulia.berto.4@gmail.com)
