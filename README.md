@@ -7,6 +7,8 @@ This app implements Classifyber, a supervised streamline-based method that perfo
 
 ### Authors
 - Giulia Bertò (giulia.berto.4@gmail.com)
+
+### Contributors
 - Emanuele Olivetti (olivetti@fbk.eu)
 
 ### Funding 
@@ -26,7 +28,7 @@ You will get the wmc segmentation of the bundle(s) of interest in the target sub
 
 Branch 1.0: \
 The wmc segmentation files you have to provide as examples should be obtained using the AFQ segmentation algorithm https://doi.org/10.25663/brainlife.app.207 or the WMA segmentation algorithm https://doi.org/10.25663/brainlife.app.188. \
-In the first case, you can choose the bundle(s) to be segmented by providing the id related to the AFQ segmentation as follows: \
+In the first case, you can choose the bundle(s) to be segmented by providing the id(s) related to the AFQ segmentation as follows: \
 1 - Left Thalamic Radiation \
 2 - Right Thalamic Radiation \
 3 - Left Corticospinal \
@@ -47,7 +49,7 @@ In the first case, you can choose the bundle(s) to be segmented by providing the
 18 - Right Uncinate \
 19 - Left Arcuate \
 20 - Right Arcuate \
-In the second case, you can choose the bundle(s) to be segmented by providing the id related to the WMA segmentation as follows: \
+In the second case, you can choose the bundle(s) to be segmented by providing the id(s) related to the WMA segmentation as follows: \
 38 - Left pArc \
 39 - Right pArc \
 40 - Left TP-SPL \
