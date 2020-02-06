@@ -24,13 +24,16 @@ set -e
 set -x
 
 segmentations=`jq -r '.segmentations' config.json`
+arr_seg=()
+arr_seg+=(${segmentations})
+num_ex=$((${#arr_seg[@]} - 2))
 
 #execute app
-if [ ! $segmentations == 'null' ]; then
-	echo "STARTING TEST..."
+if [ $num_ex -le 0 ]; then
+	echo "No examples provided. STARTING TEST..."
 	./run_test.sh
 else
-	echo "STARTING TRAINING & TEST..."
+	echo $num_ex "examples provided. STARTING TRAINING & TEST..."
 	./run.sh
 fi
 
