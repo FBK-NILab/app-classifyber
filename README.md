@@ -1,7 +1,7 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.228-blue.svg)](https://doi.org/10.25663/brainlife.app.228)
 
 ### app-classifyber
-This app implements Classifyber, a supervised streamline-based method that performs automatic bundle segmentation by learning from example bundles segmented by experts. Classifyber is based on binary linear classification, which simultaneously combines information from bundle geometries, connectivity patterns and atlases. Classifyber is robust to a multitude of diverse settings, such as when there are differences in bundle size, tracking algorithm, and/or quality of dMRI data.
+This app implements Classifyber, a supervised streamline-based method that performs automatic bundle segmentation by learning from example bundles already segmented. Classifyber is based on binary linear classification, which simultaneously combines information from bundle geometries, connectivity patterns and atlases. Classifyber is robust to a multitude of diverse settings, such as when there are differences in bundle size, tracking algorithm, and/or quality of dMRI data.
 
 ![](graphical_abstract.png)
 
