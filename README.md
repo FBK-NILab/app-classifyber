@@ -27,7 +27,7 @@ Output: \
 You will get the wmc segmentation of the bundle(s) of interest in the target subject.
 
 Branch 1.0: \
-The wmc segmentation files you have to provide as examples should be obtained using the AFQ segmentation algorithm https://doi.org/10.25663/brainlife.app.207 or the WMA segmentation algorithm https://doi.org/10.25663/brainlife.app.188. \
+The wmc segmentation files you have to provide as examples should be obtained using the AFQ segmentation algorithm (https://doi.org/10.25663/brainlife.app.207) or the WMA segmentation algorithm (https://doi.org/10.25663/brainlife.app.188). \
 In the first case, you can choose the bundle(s) to be segmented by providing the id(s) related to the AFQ segmentation as follows: \
 1 - Left Thalamic Radiation \
 2 - Right Thalamic Radiation \
