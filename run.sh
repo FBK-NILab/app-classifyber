@@ -36,7 +36,7 @@ fi
 done
 
 echo "Tractogram conversion to trk"
-mkdir tractograms_directory;
+mkdir -p tractograms_directory;
 if [[ $static == *.tck ]];then
 	echo "Input in tck format. Convert it to trk."
 	cp $static ./tractogram_static.tck;
@@ -68,12 +68,12 @@ else
 fi
 
 echo "Create examples directory"
-mkdir examples_directory;
+mkdir -p examples_directory;
 if [[ ${arr_seg[1]//[,\"]} == *.trk ]];then
 	echo "Tracts already in .trk format"
 	tract_name=$(jq -r "._inputs[2].tags[0]" config.json | tr -d "_")
 	echo $tract_name > tract_name_list.txt
-	mkdir examples_directory/$tract_name;
+	mkdir -p examples_directory/$tract_name;
 	for i in `seq 1 $num_ex`; 
 	do
 		id_mov=$(jq -r "._inputs[1+$i+$num_ex].meta.subject" config.json | tr -d "_")
@@ -92,7 +92,7 @@ else
 		while read tract_name; do
 			echo "Tract name: $tract_name";
 			if [ ! -d "examples_directory/$tract_name" ]; then
-  				mkdir examples_directory/$tract_name;
+  				mkdir -p examples_directory/$tract_name;
 			fi
 			mv $tract_name'_tract.trk' examples_directory/$tract_name/$id_mov'_'$tract_name'_tract.trk';
 
@@ -107,7 +107,7 @@ else
 fi
 
 echo "Running Classifyber" 
-mkdir tracts_trks;
+mkdir -p tracts_trks;
 #singularity exec -e docker://brainlife/dipy:0.16.0 python classifyber.py \
 python classifyber.py \
 			-moving_dir tractograms_directory \
