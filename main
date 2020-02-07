@@ -10,7 +10,7 @@ export SINGULARITYENV_WORKDIR=$(pwd)
 #echo "Loading modules"
 #module unload python
 #module load dipy/dev
-#module load nodejs
+module load nodejs
 module load singularity
 #echo "Finished loading modules"
 
