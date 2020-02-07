@@ -10,8 +10,8 @@
 #echo "Loading modules"
 #module unload python
 #module load dipy/dev
-module load nodejs
-module load singularity
+#module load nodejs
+#module load singularity
 #echo "Finished loading modules"
 
 #export PYTHONPATH=/N/u/brlife/git/nibabel:$PYTHONPATH
@@ -34,7 +34,7 @@ if [ $num_ex -le 0 ]; then
 	./run_test.sh
 else
 	echo $num_ex "examples provided. STARTING TRAINING & TEST..."
-	singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
+	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
 fi
 
 ret=$?
