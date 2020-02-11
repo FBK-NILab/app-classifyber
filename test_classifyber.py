@@ -61,6 +61,7 @@ def test_multiple_examples(tractogram_fname, src_dir, tract_name_list, out_dir):
 		estimated_tract_idx = np.where(y_pred>0)[0]
 		estimated_tract = tractogram[superset_idx_test[estimated_tract_idx]]
 		print("Time to compute classification of tract %s = %.2f seconds" %(tract_name, time.time()-t1))
+		np.save('estimated_idx_%s.npy' %tract_name, estimated_tract_idx)
 		out_fname = '%s/%s.trk' %(out_dir, tract_name)
 		save_trk(estimated_tract, out_fname)
 		print("Tract saved in %s" %out_fname)
