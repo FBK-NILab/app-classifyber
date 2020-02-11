@@ -24,7 +24,7 @@ fi
 echo "Running Classifyber (only test)"
 mkdir -p tracts_trks;
 python test_classifyber.py \
-		-src_dir 'results-training' \
+		-src_dir 'results_training' \
 		-static $subjID'_track.trk' \
 		-out_dir 'tracts_trks'
 
