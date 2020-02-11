@@ -13,16 +13,16 @@ fi
 echo "Tractogram conversion to trk"
 if [[ $static == *.tck ]];then
 	echo "Input in tck format. Convert it to trk."
-	cp $static ./tractogram_static.tck;
-	python tck2trk.py $t1_static tractogram_static.tck -f;
-	cp tractogram_static.trk $subjID'_track.trk';
+	cp $static ./tractogram_static.tck
+	python tck2trk.py $t1_static tractogram_static.tck -f
+	cp tractogram_static.trk $subjID'_track.trk'
 else
 	echo "Tractogram already in .trk format"
-	cp $static $subjID'_track.trk';
+	cp $static $subjID'_track.trk'
 fi
 
 echo "Running Classifyber (only test)"
-mkdir -p tracts_trks;
+mkdir -p tracts_trks
 python test_classifyber.py \
 		-src_dir 'results_training' \
 		-static $subjID'_track.trk' \
@@ -36,6 +36,7 @@ else
 fi
 
 echo "Building the wmc structure"
+mkdir -p tracts
 python build_wmc.py -tractogram $static
 
 if [ -f 'classification.mat' ]; then 
