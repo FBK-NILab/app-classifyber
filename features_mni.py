@@ -31,10 +31,6 @@ rois = True
 distance_func = bundles_distances_mdf
 num_local_prototypes = 100
 nb_points = 20
-with open('config.json') as f:
-	data = json.load(f)
-	tag = data["_inputs"][2]["datatype_tags"][0].encode("utf-8") #python2
-	#tag = data["_inputs"][2]["datatype_tags"][0] #python3
 
 
 def compute_X_dm(superset, prototypes, distance_func=bundles_distances_mam, nb_points=20):
@@ -73,7 +69,7 @@ def compute_X_end(superset, prototypes):
 	return endpoint_matrix
 
 
-def compute_X_roi(superset, tract_name, tag):
+def compute_X_roi(superset, tract_name):
 	"""Compute a matrix with dimension (len(superset), 2) that contains 
 	   the distances of each streamline of the superset with the 2 ROIs. 
 	""" 
@@ -89,11 +85,15 @@ def compute_X_roi(superset, tract_name, tag):
 	#	table = u.load()
 	#roi1_lab = table[tract_name]['label_ROI1'] #python3
 	#roi2_lab = table[tract_name]['label_ROI2'] #python3
-	if (tag == 'afq'):
+	d = pickle.load(open('IDs_tracts_dictionary.pickle')) #python2
+	for i, n in d.items():
+		if n == {tract_name}:
+			tractID=eval(i)
+	if tractID < 30:
 		roi_dir = 'templates_mni125'
 		roi1_filename = '%s/sub-MNI_var-AFQ_lab-%s_roi.nii.gz' %(roi_dir, roi1_lab)
 		roi2_filename = '%s/sub-MNI_var-AFQ_lab-%s_roi.nii.gz' %(roi_dir, roi2_lab)
-	elif tag == 'wmaSeg':
+	else:
 		roi_dir = 'templates_mni125_ICBM2009c'
 		roi1_filename = '%s/%s.nii.gz' %(roi_dir, roi1_lab)
 		roi2_filename = '%s/%s.nii.gz' %(roi_dir, roi2_lab)
@@ -142,7 +142,7 @@ def compute_feature_matrix(superset, tract_name, distance_func=distance_func, nb
 		print("----> Added endpoint matrix of size (%s, %s)" %(X_end.shape))
 
 	if rois:
-		X_roi = compute_X_roi(superset, tract_name, tag)
+		X_roi = compute_X_roi(superset, tract_name)
 		feature_list.append(X_roi)
 		print("----> Added ROI distance matrix of size (%s, %s)" %(X_roi.shape))
 
