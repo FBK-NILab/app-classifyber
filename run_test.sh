@@ -1,6 +1,25 @@
+#!/bin/bash
 
+subjID=`jq -r '._inputs[0].meta.subject' config.json`
+static=`jq -r '.tractogram_static' config.json`
+t1_static=`jq -r '.t1_static' config.json`
 
+echo "Check the inputs subject id"
+if [ ! $subjID == `jq -r '._inputs[1].meta.subject' config.json` ]; then
+echo "Inputs subject id incorrectly inserted. Check them again."
+	exit 1
+fi
 
+echo "Tractogram conversion to trk"
+if [[ $static == *.tck ]];then
+	echo "Input in tck format. Convert it to trk."
+	cp $static ./tractogram_static.tck;
+	python tck2trk.py $t1_static tractogram_static.tck -f;
+	cp tractogram_static.trk $subjID'_track.trk';
+else
+	echo "Tractogram already in .trk format"
+	cp $static $subjID'_track.trk';
+fi
 
 
 

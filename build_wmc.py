@@ -30,8 +30,8 @@ def build_wmc(tck_file, tractID_list):
     np.random.seed(0)
     colors = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
     by_hsv = sorted((tuple(mcolors.rgb_to_hsv(mcolors.to_rgba(color)[:3])), name)
-             for name, color in colors.items())
-    permuted_colors = np.random.permutation(by_hsv)
+    for name, color in colors.items())
+    	permuted_colors = np.random.permutation(by_hsv)
 
     for t, tractID in enumerate(tractID_list):
     	tract_name = tract_name_list[t]
@@ -88,3 +88,4 @@ if __name__ == '__main__':
     build_wmc(args.tractogram, tractID_list)
 
     sys.exit()
+

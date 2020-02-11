@@ -2,24 +2,6 @@
 #PBS -k o
 #PBS -l nodes=1:ppn=16,vmem=40gb,walltime=08:00:00
 
-#[ $PBS_O_WORKDIR ] && cd $PBS_O_WORKDIR
-
-#export SINGULARITYENV_WORKDIR=$(pwd)
-
-## modules
-#echo "Loading modules"
-#module unload python
-#module load dipy/dev
-#module load nodejs
-#module load singularity
-#echo "Finished loading modules"
-
-#export PYTHONPATH=/N/u/brlife/git/nibabel:$PYTHONPATH
-
-#echo "setting miniconda path..."
-#unset PYTHONPATH
-#export PATH=/N/u/gberto/Karst/miniconda2/bin:$PATH 
-
 set -e
 set -x
 
@@ -34,9 +16,8 @@ if [ $num_ex -le 0 ]; then
 	./run_test.sh
 else
 	echo $num_ex "examples provided. STARTING TRAINING & TEST..."
-	singularity exec docker://brainlife/dipy:1.1.1 python3 --version Python 3.6.9 ./run.sh
-	#SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
-	#./run.sh
+	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
+	#SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run.sh
 fi
 
 ret=$?
@@ -53,3 +34,4 @@ rm kdt -f
 rm prototypes.npy -f
 
 echo "Complete"
+
