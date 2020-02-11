@@ -20,6 +20,5 @@ rm *.tck
 rm -r tractograms_directory -f
 rm -r examples_directory* -f
 rm kdt -f
-rm prototypes.npy -f
 
 echo "Complete"
