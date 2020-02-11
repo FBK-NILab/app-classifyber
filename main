@@ -5,20 +5,9 @@
 set -e
 set -x
 
-segmentations=`jq -r '.segmentations' config.json`
-arr_seg=()
-arr_seg+=(${segmentations})
-num_ex=$((${#arr_seg[@]} - 2))
-
 #execute app
-if [ $num_ex -le 0 ]; then
-	echo "No examples provided. STARTING TEST..."
-	./run_test.sh
-else
-	echo $num_ex "examples provided. STARTING TRAINING & TEST..."
-	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
-	#SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run.sh
-fi
+SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
+#SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run.sh
 
 ret=$?
 if [ ! $ret -eq 0 ]; then
@@ -34,4 +23,3 @@ rm kdt -f
 rm prototypes.npy -f
 
 echo "Complete"
-
