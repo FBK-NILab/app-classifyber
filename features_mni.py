@@ -4,7 +4,6 @@ from __future__ import print_function, division
 import numpy as np
 import nibabel as nib
 import pickle
-import json
 from dipy.tracking.distances import bundles_distances_mam, bundles_distances_mdf
 from dipy.tracking.streamline import set_number_of_points
 from distances import parallel_distance_computation
