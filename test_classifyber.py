@@ -31,7 +31,7 @@ def tract_predict(src_dir, superset, tract_name, distance_func=bundles_distances
 	clf_fname = '%s/clf_%s' %(src_dir, tract_name)
 	clf = pickle.load(open(clf_fname))
 	y_pred = clf.predict(X_test)
-	print("---->Time to predict X_test of size (%s, %s) = %s seconds" %(X_test.shape[0], X_test.shape[1], time.time()-t0)) 
+	print("---->Time to predict X_test of size (%s, %s) = %.2f seconds" %(X_test.shape[0], X_test.shape[1], time.time()-t0)) 
 
 	return y_pred
 
@@ -60,7 +60,7 @@ def test_multiple_examples(tractogram_fname, src_dir, tract_name_list, out_dir):
 		y_pred = tract_predict(src_dir, superset, tract_name, distance_func=distance_func, nb_points=nb_points)
 		estimated_tract_idx = np.where(y_pred>0)[0]
 		estimated_tract = tractogram[superset_idx_test[estimated_tract_idx]]
-		print("Time to compute classification of tract %s = %i minutes" %(tract_name, (time.time()-t1)/60))
+		print("Time to compute classification of tract %s = %.2f seconds" %(tract_name, time.time()-t1))
 		out_fname = '%s/%s.trk' %(out_dir, tract_name)
 		save_trk(estimated_tract, out_fname)
 		print("Tract saved in %s" %out_fname)
@@ -87,9 +87,12 @@ if __name__ == '__main__':
 		tractID_list = np.array(eval(data["tractID_list"]), ndmin=1)
 	table = pickle.load(open('IDs_tracts_dictionary.pickle'))
 	tract_name_list = []
+	f = open("tract_name_list.txt","a")
 	for i in tractID_list:
 		tract_name = list(table[str(i)])[0]
 		tract_name_list.append(tract_name)
+		f.write(tract_name+'\n')
+	f.close()
 
 	print("----> Segmenting...")
 	test_multiple_examples(args.static, args.src_dir, tract_name_list, args.out_dir)
