@@ -88,7 +88,7 @@ if __name__ == '__main__':
 	table = pickle.load(open('IDs_tracts_dictionary.pickle'))
 	tract_name_list = []
 	for i in tractID_list:
-		tract_name = list(a[str(i)])[0]
+		tract_name = list(table[str(i)])[0]
 		tract_name_list.append(tract_name)
 
 	print("----> Segmenting...")
