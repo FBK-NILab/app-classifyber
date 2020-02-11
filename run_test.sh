@@ -21,41 +21,27 @@ else
 	cp $static $subjID'_track.trk';
 fi
 
+echo "Running Classifyber (only test)"
+mkdir -p tracts_trks;
+python test_classifyber.py \
+		-src_dir 'results-training' \
+		-static $subjID'_track.trk' \
+		-out_dir 'tracts_trks'
 
-
-
-
-
-
-
-
-
-
-
-
-
-tractID_list=`jq -r '.tractID_list' config.json`
-arr=()
-arr+=(${tractID_list})
-tractID=${arr[0]//[,\"]}
-
-if [[ $tractID < 30 ]]; then #afq
-	echo "Coregistering ROIs on the target subject space"
-	./mni_roi_registration.sh ${subjID} ${t1_static} AFQ
-else #wmaSeg
-	echo "Extracting endROIs of the minor tracts"
-	mkdir aligned_ROIs;
-	fsDir=`jq -r '.fsDir' config.json`
-	python extract_endrois_minor.py -region 'parietal' -fsDir ${fsDir} -t1 ${t1_static} -out_dir aligned_ROIs
-	python extract_endrois_minor.py -region 'temporal' -fsDir ${fsDir} -t1 ${t1_static} -out_dir aligned_ROIs
-	python extract_endrois_minor.py -region 'LatTemp' -fsDir ${fsDir} -t1 ${t1_static} -out_dir aligned_ROIs
+if [ -z "$(ls -A -- "tracts_trks")" ]; then    
+	echo "Segmentation failed."
+	exit 1
+else    
+	echo "Segmentation done."
 fi
 
+echo "Building the wmc structure"
+python build_wmc.py -tractogram $static
 
-echo "Running Classifyber (only test)"
-mkdir tracts_trks;
-singularity exec -e docker://brainlife/dipy:0.16.0 python test_classifyber.py \
-			-src_dir 'results-training' \
-			-sub_list 'subject_21_ids_test_tractseg-2.txt' \
-			-tract_list ${tractID_list} \
-			-out_dir ${output_directory}
+if [ -f 'classification.mat' ]; then 
+    echo "WMC structure created."
+else 
+	echo "WMC structure missing."
+	exit 1
+fi
+
