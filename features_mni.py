@@ -50,7 +50,7 @@ def compute_X_dm(superset, prototypes, distance_func=bundles_distances_mam, nb_p
 	return dm_superset
 
 
-def compute_X_dm_local(superset, subjID, tract_name, distance_func=bundles_distances_mam, nb_points=20):
+def compute_X_dm_local(superset, tract_name, distance_func=bundles_distances_mam, nb_points=20):
 	"""Compute the local dissimilarity matrix.
 	"""
 	if distance_func==bundles_distances_mdf:
@@ -73,7 +73,7 @@ def compute_X_end(superset, prototypes):
 	return endpoint_matrix
 
 
-def compute_X_roi(superset, subjID, tract_name, tag):
+def compute_X_roi(superset, tract_name, tag):
 	"""Compute a matrix with dimension (len(superset), 2) that contains 
 	   the distances of each streamline of the superset with the 2 ROIs. 
 	""" 
@@ -89,11 +89,10 @@ def compute_X_roi(superset, subjID, tract_name, tag):
 	#	table = u.load()
 	#roi1_lab = table[tract_name]['label_ROI1'] #python3
 	#roi2_lab = table[tract_name]['label_ROI2'] #python3
-	subjID = 'MNI'
 	if (tag == 'afq'):
 		roi_dir = 'templates_mni125'
-		roi1_filename = '%s/sub-%s_var-AFQ_lab-%s_roi.nii.gz' %(roi_dir, subjID, roi1_lab)
-		roi2_filename = '%s/sub-%s_var-AFQ_lab-%s_roi.nii.gz' %(roi_dir, subjID, roi2_lab)
+		roi1_filename = '%s/sub-MNI_var-AFQ_lab-%s_roi.nii.gz' %(roi_dir, roi1_lab)
+		roi2_filename = '%s/sub-MNI_var-AFQ_lab-%s_roi.nii.gz' %(roi_dir, roi2_lab)
 	elif tag == 'wmaSeg':
 		roi_dir = 'templates_mni125_ICBM2009c'
 		roi1_filename = '%s/%s.nii.gz' %(roi_dir, roi1_lab)
@@ -119,7 +118,7 @@ def compute_endpoints(bundle):
 	return endpoints
 
 
-def compute_feature_matrix(superset, exID, subjID, tract_name, distance_func=distance_func, nb_points=nb_points):
+def compute_feature_matrix(superset, tract_name, distance_func=distance_func, nb_points=nb_points):
 	"""Compute the feature matrix.
 	"""
 	np.random.seed(0)
@@ -132,7 +131,7 @@ def compute_feature_matrix(superset, exID, subjID, tract_name, distance_func=dis
 		print("----> Added dissimilarity matrix of size (%s, %s)" %(X_dm.shape))
 		
 	if local_prototypes:
-		X_dm_local = compute_X_dm_local(superset, subjID, tract_name, distance_func=distance_func, nb_points=nb_points)
+		X_dm_local = compute_X_dm_local(superset, tract_name, distance_func=distance_func, nb_points=nb_points)
 		feature_list.append(X_dm_local)
 		print("----> Added local dissimilarity matrix of size (%s, %s)" %(X_dm_local.shape))
 
@@ -143,7 +142,7 @@ def compute_feature_matrix(superset, exID, subjID, tract_name, distance_func=dis
 		print("----> Added endpoint matrix of size (%s, %s)" %(X_end.shape))
 
 	if rois:
-		X_roi = compute_X_roi(superset, subjID, tract_name, tag)
+		X_roi = compute_X_roi(superset, tract_name, tag)
 		feature_list.append(X_roi)
 		print("----> Added ROI distance matrix of size (%s, %s)" %(X_roi.shape))
 

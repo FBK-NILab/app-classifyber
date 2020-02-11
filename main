@@ -13,7 +13,8 @@ num_ex=$((${#arr_seg[@]} - 2))
 #execute app
 if [ $num_ex -le 0 ]; then
 	echo "No examples provided. STARTING TEST..."
-	./run_test.sh
+	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run_test.sh
+	#SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run_test.sh
 else
 	echo $num_ex "examples provided. STARTING TRAINING & TEST..."
 	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
@@ -31,7 +32,6 @@ rm *.tck
 rm -r tractograms_directory -f
 rm -r examples_directory* -f
 rm kdt -f
-rm prototypes.npy -f
 
 echo "Complete"
 
