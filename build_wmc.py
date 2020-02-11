@@ -88,3 +88,4 @@ if __name__ == '__main__':
     build_wmc(args.tractogram, tractID_list)
 
     sys.exit()
+

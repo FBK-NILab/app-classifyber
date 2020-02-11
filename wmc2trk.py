@@ -20,7 +20,7 @@ def wmc2trk(trk_file, classification, tractID_list):
     data = wmc["classification"][0][0]
     indeces = data['index']
 
-	#creating empty hader 		
+    #creating empty header 		
     hdr = nib.streamlines.trk.TrkFile.create_empty_header()
     hdr['voxel_sizes'] = voxel_sizes
     hdr['dimensions'] = dimensions

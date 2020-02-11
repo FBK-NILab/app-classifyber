@@ -57,9 +57,9 @@ def bundles_distances_roi(bundle, superset, roi1, roi2):
     roi_ex_vector = np.add(roi1_ex_dist, roi2_ex_dist)
     #subtraction
     for i in range(len(bundle)):
-	for j in range(len(superset)):
-            roi_matrix[i,j] = np.abs(np.subtract(roi_ex_vector[i], roi_vector[j]))
-	
+    	for j in range(len(superset)):
+    		roi_matrix[i,j] = np.abs(np.subtract(roi_ex_vector[i], roi_vector[j]))
+    	
     return roi_matrix
 
 

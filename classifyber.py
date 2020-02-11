@@ -2,10 +2,10 @@
 
 """ Classification of multiple bundles from multiple examples.
 """
+from __future__ import print_function, division
 import os
 import sys
 import argparse
-import os.path
 import numpy as np
 import time
 import ntpath
@@ -17,9 +17,6 @@ from dipy.tracking.streamline import set_number_of_points
 from collections import OrderedDict
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import f1_score
-from dipy.segment.clustering import QuickBundles
-from subsampling import compute_subset
 from features_mni import compute_feature_matrix
 
 
@@ -29,7 +26,6 @@ distance_func = bundles_distances_mdf
 nb_points = 20
 cw = {0:1, 1:3}
 max_iter = 1000
-ds_factor = 1
 
 
 def compute_X_y_train(subjID, tract_name, moving_tractogram_fname, example_fname):
@@ -39,14 +35,11 @@ def compute_X_y_train(subjID, tract_name, moving_tractogram_fname, example_fname
 	moving_tractogram = moving_tractogram.streamlines 
 	print("Compute kdt and prototypes of %s" %moving_tractogram_fname)
 	kdt, prototypes = compute_kdtree_and_dr_tractogram(moving_tractogram, num_prototypes=num_prototypes, 
-									 					   distance_func=distance_func, nb_points=nb_points)
+									 					distance_func=distance_func, nb_points=nb_points)
 	tract = nib.streamlines.load(example_fname)
 	tract = tract.streamlines
 	print("Computing the superset of %s" %example_fname)
 	superset_idx = compute_superset(tract, kdt, prototypes, k=2000, distance_func=distance_func, nb_points=nb_points)
-	if ds_factor<1:
-		print("Downsampling the superset of a factor %s" %ds_factor)
-		superset_idx = np.random.choice(superset_idx, int(len(superset_idx)*ds_factor), replace=False)
 	superset = moving_tractogram[superset_idx]
 	exID = ntpath.basename(moving_tractogram_fname)[4:10]
 
@@ -56,8 +49,6 @@ def compute_X_y_train(subjID, tract_name, moving_tractogram_fname, example_fname
 	print("Computing y_train.")
 	y_train = np.zeros(len(superset))
 	tract_idx = streamlines_idx(tract, kdt, prototypes, distance_func=distance_func, nb_points=nb_points)
-	if ds_factor<1:
-		tract_idx = np.intersect1d(superset_idx, tract_idx)
 	correspondent_idx = np.array([np.where(superset_idx==idx) for idx in tract_idx])
 	y_train[correspondent_idx] = 1
 
@@ -118,7 +109,7 @@ def classifyber(moving_tractograms_dir, static_tractogram_fname, ex_dir_tract):
 	static_tractogram = static_tractogram.streamlines
 	print("Compute kdt and prototypes of %s" %static_tractogram_fname)
 	kdt, prototypes = compute_kdtree_and_dr_tractogram(static_tractogram, num_prototypes=num_prototypes, 
-									 				   distance_func=distance_func, nb_points=nb_points)
+														distance_func=distance_func, nb_points=nb_points)
 	print("Computing the test superset...")
 	union_superset_idx = compute_union_superset_idx(kdt, prototypes, ex_dir_tract, distance_func=distance_func, nb_points=nb_points)
 	static_superset = static_tractogram[union_superset_idx] 
@@ -136,17 +127,13 @@ def classifyber(moving_tractograms_dir, static_tractogram_fname, ex_dir_tract):
 
 	t0=time.time()
 	clf.fit(X_train, y_train)
-	print("---->Time to fit X_train of size (%s, %s) = %s seconds" %(X_train.shape[0], X_train.shape[1], time.time()-t0))
+	print("---->Time to fit X_train of size (%s, %s) = %.2f seconds" %(X_train.shape[0], X_train.shape[1], time.time()-t0))
 	t1=time.time()
 	y_pred = clf.predict(X_test)
 	y_pred_proba = clf.predict_proba(X_test)
-	print("---->Time to predict X_test of size (%s, %s) = %s seconds" %(X_test.shape[0], X_test.shape[1], time.time()-t1))
+	print("---->Time to predict X_test of size (%s, %s) = %.2f seconds" %(X_test.shape[0], X_test.shape[1], time.time()-t1))
 	estimated_tract_idx = np.where(y_pred>0)[0]
 	estimated_tract = static_tractogram[union_superset_idx[estimated_tract_idx]] 
-	#clf_fname = 'clf_%s' %tract_name
-	#pickle.dump(clf, open(clf_fname, 'w'), protocol=pickle.HIGHEST_PROTOCOL)
-	#scaler_fname = 'scaler_%s' %tract_name
-	#pickle.dump(scaler, open(scaler_fname, 'w'), protocol=pickle.HIGHEST_PROTOCOL)
 	np.save('estimated_idx_%s.npy' %tract_name, union_superset_idx[estimated_tract_idx])
 
 	return estimated_tract	
@@ -171,7 +158,6 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	t0=time.time()
-	#os.chdir('/N/u/gberto/Karst/classifiber_neuroimage/code')
 
 	with open(args.list) as f:
 		tract_name_list = f.read().splitlines()
@@ -188,3 +174,4 @@ if __name__ == '__main__':
 
 	print("Total time elapsed for the classification of all the tracts = %i minutes" %((time.time()-t0)/60))
 	sys.exit()
+
