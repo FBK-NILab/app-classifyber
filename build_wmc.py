@@ -20,7 +20,7 @@ def build_wmc(tck_file, tractID_list):
     tractogram = nib.streamlines.load(tck_file)
     tractogram = tractogram.streamlines
     labels = np.zeros((len(tractogram),1))
-    os.makedirs('tracts')
+    #os.makedirs('tracts')
     tractsfile = []
     names = np.full(tractID_list[-1],'NC',dtype=object)
     

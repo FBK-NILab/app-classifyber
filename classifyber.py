@@ -28,7 +28,7 @@ cw = {0:1, 1:3}
 max_iter = 1000
 
 
-def compute_X_y_train(subjID, tract_name, moving_tractogram_fname, example_fname):
+def compute_X_y_train(tract_name, moving_tractogram_fname, example_fname):
 	"""Compute X_train and y_train.
 	"""
 	moving_tractogram = nib.streamlines.load(moving_tractogram_fname)
@@ -44,7 +44,7 @@ def compute_X_y_train(subjID, tract_name, moving_tractogram_fname, example_fname
 	exID = ntpath.basename(moving_tractogram_fname)[4:10]
 
 	print("Computing X_train.")
-	X_train = compute_feature_matrix(superset, exID, subjID, tract_name, distance_func=distance_func, nb_points=nb_points)
+	X_train = compute_feature_matrix(superset, tract_name, distance_func=distance_func, nb_points=nb_points)
  	
 	print("Computing y_train.")
 	y_train = np.zeros(len(superset))
@@ -81,7 +81,6 @@ def compute_union_superset_idx(kdt, prototypes, ex_dir_tract, distance_func=bund
 def classifyber(moving_tractograms_dir, static_tractogram_fname, ex_dir_tract):
 	"""Code for classification from multiple examples.
 	"""
-	subjID = ntpath.basename(static_tractogram_fname)[4:10]
 	tract_name = ntpath.basename(ex_dir_tract)
 	moving_tractograms = os.listdir(moving_tractograms_dir)
 	moving_tractograms.sort()
@@ -99,7 +98,7 @@ def classifyber(moving_tractograms_dir, static_tractogram_fname, ex_dir_tract):
 	for i in range(nt):
 		moving_tractogram_fname = '%s/%s' %(moving_tractograms_dir, moving_tractograms[i])
 		example_fname = '%s/%s' %(ex_dir_tract, examples[i])
-		X_tmp, y_tmp = compute_X_y_train(subjID, tract_name, moving_tractogram_fname, example_fname)
+		X_tmp, y_tmp = compute_X_y_train(tract_name, moving_tractogram_fname, example_fname)
 		X_train = np.vstack([X_train, X_tmp]) if X_train.size else X_tmp
 		y_train = np.hstack([y_train, y_tmp]) if y_train.size else y_tmp
 		print(X_train.shape)
@@ -113,7 +112,7 @@ def classifyber(moving_tractograms_dir, static_tractogram_fname, ex_dir_tract):
 	print("Computing the test superset...")
 	union_superset_idx = compute_union_superset_idx(kdt, prototypes, ex_dir_tract, distance_func=distance_func, nb_points=nb_points)
 	static_superset = static_tractogram[union_superset_idx] 
-	X_test = compute_feature_matrix(static_superset, subjID, subjID, tract_name, distance_func=distance_func, nb_points=nb_points)
+	X_test = compute_feature_matrix(static_superset, tract_name, distance_func=distance_func, nb_points=nb_points)
 	del kdt, static_superset
 
 	print("Normalize X_train and X_test.")	

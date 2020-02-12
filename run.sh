@@ -36,78 +36,78 @@ fi
 done
 
 echo "Tractogram conversion to trk"
-mkdir -p tractograms_directory;
+mkdir -p tractograms_directory
 if [[ $static == *.tck ]];then
 	echo "Input in tck format. Convert it to trk."
-	cp $static ./tractogram_static.tck;
-	python tck2trk.py $t1_static tractogram_static.tck -f;
-	cp tractogram_static.trk $subjID'_track.trk';
-	for i in `seq 1 $num_ex`; 
+	cp $static ./tractogram_static.tck
+	python tck2trk.py $t1_static tractogram_static.tck -f
+	cp tractogram_static.trk $subjID'_track.trk'
+	for i in `seq 1 $num_ex` 
 	do 
 		t1_moving=${arr_t1s[i]//[,\"]}
 		id_mov=$(jq -r "._inputs[1+$i+$num_ex].meta.subject" config.json | tr -d "_")
 		cp ${arr_mov[i]//[,\"]} ./${id_mov}_tractogram_moving.tck;
-		python tck2trk.py $t1_moving ${id_mov}_tractogram_moving.tck -f;
-		mv ${id_mov}_tractogram_moving.trk tractograms_directory/$id_mov'_track.trk';
+		python tck2trk.py $t1_moving ${id_mov}_tractogram_moving.tck -f
+		mv ${id_mov}_tractogram_moving.trk tractograms_directory/$id_mov'_track.trk'
 	done
 else
 	echo "Tractogram already in .trk format"
-	cp $static $subjID'_track.trk';
-	for i in `seq 1 $num_ex`; 
+	cp $static $subjID'_track.trk'
+	for i in `seq 1 $num_ex` 
 	do 
 		id_mov=$(jq -r "._inputs[1+$i+$num_ex].meta.subject" config.json | tr -d "_")
-		cp ${arr_mov[i]//[,\"]} tractograms_directory/$id_mov'_track.trk';
+		cp ${arr_mov[i]//[,\"]} tractograms_directory/$id_mov'_track.trk'
 	done
 fi
 
 if [ -z "$(ls -A -- "tractograms_directory")" ]; then    
-	echo "tractograms_directory is empty."; 
+	echo "tractograms_directory is empty." 
 	exit 1;
 else    
-	echo "tractograms_directory created."; 
+	echo "tractograms_directory created." 
 fi
 
 echo "Create examples directory"
-mkdir -p examples_directory;
+mkdir -p examples_directory
 if [[ ${arr_seg[1]//[,\"]} == *.trk ]];then
 	echo "Tracts already in .trk format"
 	tract_name=$(jq -r "._inputs[2].tags[0]" config.json | tr -d "_")
 	echo $tract_name > tract_name_list.txt
-	mkdir -p examples_directory/$tract_name;
-	for i in `seq 1 $num_ex`; 
+	mkdir -p examples_directory/$tract_name
+	for i in `seq 1 $num_ex`;
 	do
 		id_mov=$(jq -r "._inputs[1+$i+$num_ex].meta.subject" config.json | tr -d "_")
-		cp ${arr_seg[i]//[,\"]} examples_directory/$tract_name/$id_mov'_'$tract_name'_tract.trk';
+		cp ${arr_seg[i]//[,\"]} examples_directory/$tract_name/$id_mov'_'$tract_name'_tract.trk'
 	done
 else
 	echo "Tracts conversion to trk"
-	for i in `seq 1 $num_ex`; 
+	for i in `seq 1 $num_ex` 
 	do
 		t1_moving=${arr_t1s[i]//[,\"]}
 		id_mov=$(jq -r "._inputs[1+$i+$num_ex].meta.subject" config.json | tr -d "_")
 		tractogram_moving=tractograms_directory/$id_mov'_track.trk'		
 		seg_file=${arr_seg[i]//[,\"]}
-		rm -f tract_name_list.txt;
+		rm -f tract_name_list.txt
 		python wmc2trk.py -tractogram $tractogram_moving -classification $seg_file
 		while read tract_name; do
-			echo "Tract name: $tract_name";
+			echo "Tract name: $tract_name"
 			if [ ! -d "examples_directory/$tract_name" ]; then
-  				mkdir -p examples_directory/$tract_name;
+  				mkdir -p examples_directory/$tract_name
 			fi
-			mv $tract_name'_tract.trk' examples_directory/$tract_name/$id_mov'_'$tract_name'_tract.trk';
+			mv $tract_name'_tract.trk' examples_directory/$tract_name/$id_mov'_'$tract_name'_tract.trk'
 
 			if [ -z "$(ls -A -- "examples_directory/$tract_name")" ]; then    
-				echo "examples_directory is empty."; 
-				exit 1;
+				echo "examples_directory is empty."
+				exit 1
 			else    
-				echo "examples_directory created."; 
+				echo "examples_directory created." 
 			fi	
 		done < tract_name_list.txt
 	done
 fi
 
 echo "Running Classifyber" 
-mkdir -p tracts_trks;
+mkdir -p tracts_trks
 python classifyber.py \
 			-moving_dir tractograms_directory \
 			-static $subjID'_track.trk' \
@@ -123,6 +123,7 @@ else
 fi
 
 echo "Building the wmc structure"
+mkdir -p tracts
 python build_wmc.py -tractogram $static
 
 if [ -f 'classification.mat' ]; then 
