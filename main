@@ -6,20 +6,8 @@ set -e
 set -x
 
 #execute app
-<<<<<<< HEAD
 SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
 #SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run.sh
-=======
-if [ $num_ex -le 0 ]; then
-	echo "No examples provided. STARTING TEST..."
-	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run_test.sh
-	#SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run_test.sh
-else
-	echo $num_ex "examples provided. STARTING TRAINING & TEST..."
-	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
-	#SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run.sh
-fi
->>>>>>> 1.0
 
 ret=$?
 if [ ! $ret -eq 0 ]; then
