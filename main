@@ -6,6 +6,7 @@ set -e
 set -x
 
 #execute app
+echo "STARTING TRAINING + TEST..."
 SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 ./run.sh
 #SINGULARITYENV_PYTHONNOUSERSITE=true  singularity exec docker://brainlife/dipy:1.1.1 ./run.sh
 
