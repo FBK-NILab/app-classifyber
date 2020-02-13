@@ -17,8 +17,7 @@ This app implements Classifyber, a supervised streamline-based method that perfo
 [![NSF-AOC-1916518](https://img.shields.io/badge/NSF_AOC-1916518-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1916518)
 
 ### Reference
-"Classifyber, a robust streamline-based linear classifier for white matter bundle segmentation", Bertò, G., Bullock, D., Astolfi, P., Hayashi, S., Zigiotto, L., Annicchiarico, L., Corsini, F., De
-Benedictis, A., Sarubbo, S., Pestilli, F., Avesani, P., Olivetti, E. https://www.biorxiv.org/content/10.1101/2020.02.10.942714v1
+["Classifyber, a robust streamline-based linear classifier for white matter bundle segmentation"](https://www.biorxiv.org/content/10.1101/2020.02.10.942714v1), Bertò, G., Bullock, D., Astolfi, P., Hayashi, S., Zigiotto, L., Annicchiarico, L., Corsini, F., De Benedictis, A., Sarubbo, S., Pestilli, F., Avesani, P., Olivetti, E. 
 
 ### Running the app
 On [BrainLife.io](http://brainlife.io/) \
