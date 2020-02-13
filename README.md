@@ -1,6 +1,6 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.228-blue.svg)](https://doi.org/10.25663/brainlife.app.228)
 
-### app-classifyber
+# app-classifyber
 This app implements Classifyber, a supervised streamline-based method that performs automatic bundle segmentation by learning from example bundles already segmented, and that is robust to a multitude of diverse settings, i.e. that can deal with different bundle sizes, tracking algorithms, and dMRI data qualities. Classifyber is based on binary linear classification, which simultaneously combines information from bundle geometries, connectivity patterns and atlases. 
 
 ![](graphical_abstract_classifyber.png)
@@ -24,7 +24,7 @@ On [BrainLife.io](http://brainlife.io/) \
 You can submit this App online at https://doi.org/10.25663/brainlife.app.228 via the “Execute” tab.
 
 Inputs: \
-To perform the bundle segmentation, you need two key elements: (i) the tractogram of the (target) subject you want to extract the bundle(s) from and (ii) the wmc segmentations of multiple (example) subjects you want to learn from. Moreover, you have to provide the anatomical T1s and the tractograms of the (example) subjects (which are used to compute bundle superset and internal conversions). WARNING: all the tractograms need to be already co-registered in the same anatomical space.  
+To perform the bundle segmentation, you need two key elements: (i) the tractogram of the (target) subject you want to extract the bundle from and (ii) the wmc segmentations of multiple (example) subjects you want to learn from. Moreover, you have to provide the anatomical T1s and the tractograms of the (example) subjects (which are used to compute bundle superset and internal conversions). WARNING: all the tractograms need to be already co-registered in the same anatomical space.  
 
 Output: \
 You will get the wmc segmentation of the bundle(s) of interest in the target subject.
