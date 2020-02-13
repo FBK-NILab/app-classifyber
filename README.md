@@ -16,12 +16,15 @@ This app implements Classifyber, a supervised streamline-based method that perfo
 [![NSF-BCS-1636893](https://img.shields.io/badge/NSF_BCS-1636893-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1636893)
 [![NSF-AOC-1916518](https://img.shields.io/badge/NSF_AOC-1916518-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1916518)
 
+### Reference
+["Classifyber, a robust streamline-based linear classifier for white matter bundle segmentation"](https://www.biorxiv.org/content/10.1101/2020.02.10.942714v1), Bertò, G., Bullock, D., Astolfi, P., Hayashi, S., Zigiotto, L., Annicchiarico, L., Corsini, F., De Benedictis, A., Sarubbo, S., Pestilli, F., Avesani, P., Olivetti, E. 
+
 ### Running the app
 On [BrainLife.io](http://brainlife.io/) \
 You can submit this App online at https://doi.org/10.25663/brainlife.app.228 via the “Execute” tab.
 
 Inputs: \
-To perform the bundle segmentation, you need two key elements: (i) the tractogram of the (target) subject you want to extract the bundle from and (ii) the wmc segmentations of multiple (example) subjects you want to learn from. Moreover, you have to provide the anatomical T1s and the tractograms of the (example) subjects (which are used to compute bundle superset and internal conversions). WARNING: all the tractograms need to be already co-registered in the same anatomical space.  
+To perform the bundle segmentation, you need two key elements: (i) the tractogram of the (target) subject you want to extract the bundle(s) from and (ii) the wmc segmentations of multiple (example) subjects you want to learn from. Moreover, you have to provide the anatomical T1s and the tractograms of the (example) subjects (which are used to compute bundle superset and internal conversions). WARNING: all the tractograms need to be already co-registered in the same anatomical space.  
 
 Output: \
 You will get the wmc segmentation of the bundle(s) of interest in the target subject.
