@@ -22,8 +22,7 @@ def build_wmc(tck_file, tractID_list):
     labels = np.zeros((len(tractogram),1))
     #os.makedirs('tracts')
     tractsfile = []
-    #names = np.full(tractID_list[-1],'NC',dtype=object)
-    names = np.full(len(tractID_list),'NC',dtype=object)
+    names = np.full(tractID_list[-1],'NC',dtype=object)
     
     with open('tract_name_list.txt') as f:
     	tract_name_list = f.read().splitlines()
