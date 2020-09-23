@@ -133,3 +133,6 @@ else
 	exit 1
 fi
 
+mkdir -p output_wmc
+mv tracts output_wmc
+cp classification.mat output_wmc
