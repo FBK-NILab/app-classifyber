@@ -16,12 +16,12 @@ def build_wmc(tck_file, tractID_list):
     """
     Build the wmc structure.
     """
-    print("building wmc structure")
     tractogram = nib.streamlines.load(tck_file)
     tractogram = tractogram.streamlines
     labels = np.zeros((len(tractogram),1))
     #os.makedirs('tracts')
     tractsfile = []
+    #names = np.full(tractID_list[-1],'NC',dtype=object)
     names = np.full(len(tractID_list),'NC',dtype=object)
     
     with open('tract_name_list.txt') as f:
@@ -37,7 +37,8 @@ def build_wmc(tck_file, tractID_list):
     	tract_name = tract_name_list[t]
     	idx_fname = 'estimated_idx_%s.npy' %tract_name		
     	idx_tract = np.load(idx_fname)
-    	labels[idx_tract] = tractID
+    	#labels[idx_tract] = tractID
+    	labels[idx_tract] = t+1
 
     	#build json file
     	filename = '%s.json' %tractID
@@ -65,7 +66,8 @@ def build_wmc(tck_file, tractID_list):
     	splitname = tract_name.split('_')
     	fullname = splitname[-1].capitalize()+' '+' '.join(splitname[0:-1])  
     	tractsfile.append({"name": fullname, "color": color, "filename": filename})
-    	names[tractID-1] = tract_name    	
+    	#names[tractID-1] = tract_name  
+    	names[t] = tract_name		  	
 
     print("saving classification.mat")
     sio.savemat('classification.mat', { "classification": {"names": names, "index": labels }})
@@ -88,4 +90,3 @@ if __name__ == '__main__':
     build_wmc(args.tractogram, tractID_list)
 
     sys.exit()
-
