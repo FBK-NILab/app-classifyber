@@ -14,13 +14,13 @@ If you want to run only the TEST PHASE, please refer to the App https://doi.org/
 - Emanuele Olivetti (olivetti@fbk.eu)
 
 ### Funding Acknowledgement
-We kindly ask that you acknowledge the funding below in your publications and code reusing this code.
+We kindly ask that you acknowledge the funding below in your publications and code reusing this code. \
 [![NSF-BCS-1734853](https://img.shields.io/badge/NSF_BCS-1734853-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1734853)
 [![NSF-BCS-1636893](https://img.shields.io/badge/NSF_BCS-1636893-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1636893)
 [![NSF-AOC-1916518](https://img.shields.io/badge/NSF_AOC-1916518-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1916518)
 
 ### Citation
-We kindly ask that you cite the following article when publishing papers and code using this code.
+We kindly ask that you cite the following article when publishing papers and code using this code: \
 ["Classifyber, a robust streamline-based linear classifier for white matter bundle segmentation"](https://doi.org/10.1016/j.neuroimage.2020.117402), Bertò, G., Bullock, D., Astolfi, P., Hayashi, S., Zigiotto, L., Annicchiarico, L., Corsini, F., De Benedictis, A., Sarubbo, S., Pestilli, F., Avesani, P., Olivetti, E. NeuroImage (2020).
 
 ## Running the app
