@@ -24,7 +24,7 @@ We kindly ask that you cite the following article when publishing papers and cod
 ["Classifyber, a robust streamline-based linear classifier for white matter bundle segmentation"](https://doi.org/10.1016/j.neuroimage.2020.117402), Bertò, G., Bullock, D., Astolfi, P., Hayashi, S., Zigiotto, L., Annicchiarico, L., Corsini, F., De Benedictis, A., Sarubbo, S., Pestilli, F., Avesani, P., Olivetti, E. NeuroImage (2020).
 
 ## Running the app
-### On [Brainlife.io](http://brainlife.io/) \
+### On [Brainlife.io](http://brainlife.io/)
 You can submit this App online at https://doi.org/10.25663/brainlife.app.228 via the “Execute” tab.
 
 Inputs: \
