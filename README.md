@@ -102,5 +102,5 @@ In the second case, you can choose the bundle(s) to be segmented by providing th
 #### Dependencies
 This App only requires [singularity](https://sylabs.io/singularity/) to run.
 
-#### MIT Copyright (c) 2020 brainlife.io The University of Texas at Austin and Indiana University
+#### MIT Copyright (c) 2020 Bruno Kessler Foundation (FBK)
 
