@@ -1,6 +1,52 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.228-blue.svg)](https://doi.org/10.25663/brainlife.app.228)
 
 # app-classifyber
+
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+> **Segments white matter bundles in a target tractogram with Classifyber, a streamline-based linear classifier trained on example segmentations from other subjects.**
+
+Runs both the training and test phases of Classifyber: for each requested bundle it learns a binary linear classifier from example subjects' segmented bundles (combining streamline geometry, connectivity and atlas features in MNI space) and applies it to the target subject's tractogram. Use it for automatic bundle segmentation when segmented examples are available; for the test phase only, use brainlife.app.265. The moving tractograms, segmentations and T1s must be given in the same subject order, and the code checks that subject IDs match.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/track/tck` ×2 · `neuro/anat/t1w` ×2 · `neuro/wmc` |
+| 📤 **Outputs** | `neuro/wmc` |
+| 🐳 **Container** | `brainlife/dipy:0.16.0` |
+| ⚙️ **Resources** | 16 CPUs · 40 GB memory · 12 h walltime |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.228](https://doi.org/10.25663/brainlife.app.228) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `0` | `neuro/track/tck` | yes | Tractogram of static (target) subject |
+| `1` | `neuro/anat/t1w` (acpc_aligned) | yes | T1 of static (target) subject |
+| `2` | `neuro/wmc` | yes | Segmentations of moving (examples) subjects (they should be extracted from the tractogram provided) |
+| `3` | `neuro/track/tck` | yes | Tractograms of moving (example) subjects |
+| `4` | `neuro/anat/t1w` (acpc_aligned) | yes | Ts1 of moving (example) subjects |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `output_wmc` | `neuro/wmc` | White matter classification (classification.mat plus per-tract JSON files) of the selected bundles in the target tractogram. |
+
+<details>
+<summary><b>⚙️ Parameters</b> (1)</summary>
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `tractID_list` | string |  | ID list of the bundles of interest, separated by commas (refer to the README.md for the mapping) |
+
+</details>
+
+📚 **References used by this App:**
+- Berto G, Bullock D, Astolfi P, et al. Classifyber, a robust streamline-based linear classifier for white matter bundle segmentation. NeuroImage (2020). [doi:10.1016/j.neuroimage.2020.117402](https://doi.org/10.1016/j.neuroimage.2020.117402)
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
+
 This App implements both the TRAINING and TEST PHASES of Classifyber, a supervised streamline-based method that performs automatic bundle segmentation by learning from example bundles already segmented. Classifyber is based on binary linear classification, which simultaneously combines information from bundle geometries, connectivity patterns, and atlases. In addition, it is robust to a multitude of diverse settings, i.e. it can deal with different bundle sizes, tracking algorithms, and dMRI data qualities.
 
 ![](graphical_abstract_classifyber.png)
